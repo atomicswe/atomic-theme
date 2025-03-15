@@ -1,0 +1,2 @@
+require('atomic-theme').load()
+

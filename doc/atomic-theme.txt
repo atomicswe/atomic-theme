@@ -1,0 +1,153 @@
+*atomic-theme.txt*    A sophisticated, eye-friendly Neovim theme
+
+================================================================================
+CONTENTS                                                           *atomic-theme-contents*
+
+    1. Introduction ........................... |atomic-theme-introduction|
+    2. Installation ........................... |atomic-theme-installation|
+    3. Usage .................................. |atomic-theme-usage|
+    4. Configuration .......................... |atomic-theme-configuration|
+    5. Supported Plugins ...................... |atomic-theme-plugins|
+    6. FAQ .................................... |atomic-theme-faq|
+    7. License ................................ |atomic-theme-license|
+
+================================================================================
+1. INTRODUCTION                                               *atomic-theme-introduction*
+
+Atomic theme is a sophisticated, eye-friendly dark theme for Neovim with carefully 
+balanced colors. It provides excellent syntax highlighting while avoiding eye 
+strain during long coding sessions.
+
+Features:
+- Modern color palette with proper contrast
+- Extensive highlight groups for UI elements
+- Rich plugin support
+- Semantic color coding for better code readability
+- Customization options
+
+================================================================================
+2. INSTALLATION                                               *atomic-theme-installation*
+
+Using packer.nvim:
+>
+    use {
+        'atomicswe/atomic-theme',
+        config = function()
+            -- Optional configuration
+            require('atomic-theme').setup({
+                -- options
+            })
+            
+            -- Load the colorscheme
+            vim.cmd('colorscheme atomic-theme')
+        end
+    }
+<
+
+Using vim-plug:
+>
+    Plug 'atomicswe/atomic-theme'
+<
+Then add to your init.vim/init.lua:
+>
+    " Optional configuration
+    lua require('atomic-theme').setup({ 
+        -- options 
+    })
+    
+    colorscheme atomic-theme
+<
+
+Using lazy.nvim:
+>
+    {
+        'atomicswe/atomic-theme',
+        priority = 1000,
+        config = function()
+            require('atomic-theme').setup({
+                -- options
+            })
+            vim.cmd.colorscheme 'atomic-theme'
+        end,
+    }
+<
+
+================================================================================
+3. USAGE                                                            *atomic-theme-usage*
+
+After installation, you can activate the theme with:
+>
+    :colorscheme atomic-theme
+<
+
+================================================================================
+4. CONFIGURATION                                             *atomic-theme-configuration*
+
+Atomic theme comes with several configuration options. You can customize the theme by 
+passing a table to the setup function:
+
+>
+    require('atomic-theme').setup({
+        transparent = false,       -- Use transparent background
+        italic_comments = true,    -- Make comments italic
+        bold_keywords = true,      -- Make keywords bold
+        bold_functions = false,    -- Make function names bold
+        dim_inactive_windows = false, -- Dim inactive windows
+        disable_plugins = {},      -- Disable specific plugin highlights
+        custom_highlights = {},    -- User-defined highlight overrides
+    })
+<
+
+Example with custom highlights:
+>
+    require('atomic-theme').setup({
+        bold_keywords = false,
+        custom_highlights = {
+            Comment = { fg = "#676e95", italic = true },
+            Keyword = { fg = "#c792ea" },
+        }
+    })
+<
+
+================================================================================
+5. SUPPORTED PLUGINS                                              *atomic-theme-plugins*
+
+Atomic theme provides specialized highlighting for these plugins:
+
+- Treesitter
+- Telescope
+- NvimTree
+- LSP
+- Git signs
+- Diagnostic
+- Indent Blankline
+- Notify
+- Bufferline
+- Dashboard
+
+You can disable specific plugin highlighting:
+>
+    require('atomic-theme').setup({
+        disable_plugins = { "bufferline", "telescope" }
+    })
+<
+
+================================================================================
+6. FAQ                                                               *atomic-theme-faq*
+
+Q: How can I make Atomic my default theme?
+A: Add `vim.cmd('colorscheme atomic-theme')` to your init.lua after the setup.
+
+Q: Can I create a lighter variant of Atomic?
+A: Currently, Atomic only supports a dark background. A light theme version may 
+   be added in the future.
+
+Q: Terminal colors look different from Neovim?
+A: Atomic sets terminal colors, but your terminal emulator needs to support this.
+   Try using a terminal that supports 24-bit color (true color).
+
+================================================================================
+7. LICENSE                                                        *atomic-theme-license*
+
+Atomic Theme is released under the MIT License.
+See |license| or https://opensource.org/licenses/MIT
