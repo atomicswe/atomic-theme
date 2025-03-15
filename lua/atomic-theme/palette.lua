@@ -25,6 +25,7 @@ M.colors = {
     type      = "#2ac3de", -- Cyan for types
     variable  = "#c0caf5", -- Default foreground for variables
     parameter = "#e0af68", -- Gold for parameters
+    property  = "#5de4c7", -- Turquoise for object properties
 
     -- Status and special
     error     = "#f7768e", -- Soft red for errors
