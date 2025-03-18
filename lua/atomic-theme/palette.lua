@@ -1,3 +1,7 @@
+-- Nova Theme Color Palette
+--
+-- Colors are defined here to make them easy to reference and modify
+
 local M = {}
 
 M.colors = {
@@ -16,25 +20,25 @@ M.colors = {
   cursor    = "#38D4A4", -- Cursor color (using teal from palette)
 
   -- Syntax highlighting
-  keyword   = "#7F27C5", -- Purple for keywords
-  operator  = "#3FC6F0", -- Light blue for operators
-  func      = "#107EEC", -- Blue for functions
-  string    = "#88BA00", -- Olive green for strings
-  constant  = "#FF8A00", -- Orange for constants
-  number    = "#FF8A00", -- Using same orange for numbers
-  type      = "#5C47E0", -- Indigo for types
-  variable  = "#c0caf5", -- Default foreground for variables
-  parameter = "#DB4D8E", -- Pink for parameters
-  property  = "#AF2294", -- Magenta for object properties
+  keyword   = "#9F32F9", -- Brightened purple for keywords
+  operator  = "#47D7FF", -- Brightened light blue for operators
+  func      = "#3993FF", -- Brightened blue for functions
+  string    = "#A0D620", -- Brightened olive green for strings
+  constant  = "#FF9D20", -- Brightened orange for constants
+  number    = "#FF9D20", -- Using same brightened orange for numbers
+  type      = "#7159FF", -- Brightened indigo for types
+  variable  = "#D5E8FF", -- Brightened default foreground for variables
+  parameter = "#FF5DA8", -- Brightened pink for parameters
+  property  = "#FF40C3", -- Brightened magenta for object properties
 
   -- Status and special
-  error     = "#E11C1C", -- Red for errors
-  warning   = "#e0af68", -- Gold for warnings
-  hint      = "#38D4A4", -- Teal for hints
-  info      = "#3FC6F0", -- Light blue for info
-  added     = "#2DB500", -- Green for git added
-  modified  = "#107EEC", -- Blue for git modified
-  removed   = "#E11C1C", -- Red for git removed
+  error     = "#FF3939", -- Brightened red for errors
+  warning   = "#FFAE30", -- Brightened orange for warnings
+  hint      = "#4DFFBF", -- Brightened teal for hints
+  info      = "#59DFFF", -- Brightened light blue for info
+  added     = "#42FF00", -- Brightened green for git added
+  modified  = "#3993FF", -- Brightened blue for git modified
+  removed   = "#FF3939", -- Brightened red for git removed
 
   -- Diff colors
   diff_add    = "#2a3834",
