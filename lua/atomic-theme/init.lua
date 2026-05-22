@@ -9,16 +9,16 @@ local config = require("atomic-theme.config")
 local util = require("atomic-theme.util")
 
 function M.load()
+    local options = config.options
+    local colors, background = palette.get(options.style)
+
     vim.cmd("highlight clear")
     if vim.fn.exists("syntax_on") then
         vim.cmd("syntax reset")
     end
 
-    vim.o.background = "dark"
+    vim.o.background = background
     vim.g.colors_name = "atomic-theme"
-
-    local colors = palette.colors
-    local options = config.options
 
     local bg = options.transparent and "NONE" or colors.bg
 
@@ -27,6 +27,7 @@ function M.load()
         Normal = { bg = bg, fg = colors.fg },
         NormalFloat = { bg = options.transparent and "NONE" or colors.bg_float, fg = colors.fg },
         FloatBorder = { bg = options.transparent and "NONE" or colors.bg_float, fg = colors.border },
+        ColorColumn = { bg = colors.border },
         Cursor = { bg = colors.cursor, fg = colors.bg },
         CursorLine = { bg = colors.bg_alt },
         CursorColumn = { bg = colors.bg_alt },
@@ -34,27 +35,28 @@ function M.load()
         CursorLineNr = { fg = colors.fg, bold = true },
         Visual = { bg = colors.selection },
         VisualNOS = { bg = colors.selection },
-        Search = { bg = "#3d59a1", fg = colors.fg, bold = true },
+        Search = { bg = colors.selection, fg = colors.fg, bold = true },
         IncSearch = { bg = colors.selection, fg = colors.fg, bold = true },
-        MatchParen = { bg = "#344b6f", bold = true },
-        NonText = { fg = "#3b4261" },
-        Folded = { bg = colors.bg_alt, fg = colors.comment, italic = true },
+        MatchParen = { bg = colors.bg_alt, bold = true },
+        NonText = { fg = colors.border },
+        Folded = { bg = colors.bg_alt, fg = colors.comment },
         FoldColumn = { fg = colors.comment },
         SignColumn = { bg = bg, fg = colors.fg },
-        VertSplit = { fg = colors.border },
+        VertSplit = { bg = bg, fg = colors.bg_float },
+        WinSeparator = { bg = bg, fg = colors.bg_float },
         Pmenu = { bg = colors.bg_float, fg = colors.fg },
         PmenuSel = { bg = colors.selection, fg = colors.fg },
         PmenuSbar = { bg = colors.bg_alt },
         PmenuThumb = { bg = colors.selection },
-        StatusLine = { bg = colors.bg_alt, fg = colors.fg },
-        StatusLineNC = { bg = colors.bg_alt, fg = colors.comment },
+        StatusLine = { bg = colors.bg, fg = colors.fg },
+        StatusLineNC = { bg = colors.bg, fg = colors.comment },
         TabLine = { bg = colors.bg_alt, fg = colors.comment },
         TabLineFill = { bg = bg },
         TabLineSel = { bg = bg, fg = colors.fg, bold = true },
         WildMenu = { bg = colors.bg_alt, fg = colors.fg, bold = true },
         Title = { fg = colors.func, bold = true },
         Directory = { fg = colors.func },
-        SpecialKey = { fg = colors.keyword },
+        SpecialKey = { fg = colors.info },
         MoreMsg = { fg = colors.string },
         Question = { fg = colors.string },
         WarningMsg = { fg = colors.warning, bold = true },
@@ -71,7 +73,7 @@ function M.load()
         String = { fg = colors.string },
         Character = { fg = colors.string },
         Number = { fg = colors.number },
-        Boolean = { fg = colors.constant, italic = true },
+        Boolean = { fg = colors.constant },
         Float = { fg = colors.number },
         Identifier = { fg = colors.variable },
         property = { fg = colors.property },
@@ -90,7 +92,7 @@ function M.load()
         PreCondit = { fg = colors.keyword },
         Type = { fg = colors.type },
         StorageClass = { fg = colors.keyword },
-        Structure = { fg = colors.type },
+        Structure = { fg = colors.fg },
         Typedef = { fg = colors.type },
         Special = { fg = colors.operator },
         SpecialChar = { fg = colors.string },
@@ -118,6 +120,19 @@ function M.load()
         DiffChange = { bg = colors.diff_change },
         DiffDelete = { bg = colors.diff_delete },
         DiffText = { bg = colors.diff_text, fg = colors.fg, bold = true },
+        diffAdded = { bg = colors.diff_add, fg = colors.added },
+        diffChanged = { bg = colors.diff_change, fg = colors.modified },
+        diffRemoved = { bg = colors.diff_delete, fg = colors.removed },
+        diffLine = { bg = colors.diff_text, fg = colors.info },
+        GitSignsAdd = { fg = colors.added },
+        GitSignsChange = { fg = colors.modified },
+        GitSignsDelete = { fg = colors.removed },
+        GitSignsAddLn = { bg = colors.diff_add },
+        GitSignsChangeLn = { bg = colors.diff_change },
+        GitSignsDeleteLn = { bg = colors.diff_delete },
+        GitSignsAddInline = { bg = colors.diff_add },
+        GitSignsChangeInline = { bg = colors.diff_text },
+        GitSignsDeleteInline = { bg = colors.diff_delete },
     }
 
     util.apply_highlights(highlights)
@@ -133,21 +148,21 @@ function M.load()
             ["@method.call"] = { fg = colors.func },
             ["@constant"] = { link = "Constant" },
             ["@variable"] = { link = "Identifier" },
-            ["@variable.builtin"] = { fg = colors.constant, italic = true },
+            ["@variable.builtin"] = { fg = colors.constant },
             ["@property"] = { fg = colors.property },
             ["@field"] = { fg = colors.property },
-            ["@constructor"] = { fg = colors.type },
+            ["@constructor"] = { fg = colors.func },
             ["@parameter"] = { fg = colors.parameter },
-            ["@namespace"] = { fg = colors.type, italic = true },
+            ["@namespace"] = { fg = colors.fg },
             ["@type"] = { link = "Type" },
-            ["@type.builtin"] = { fg = colors.type, italic = true },
+            ["@type.builtin"] = { fg = colors.type },
             ["@tag"] = { fg = colors.keyword },
             ["@tag.attribute"] = { fg = colors.parameter },
             ["@tag.delimiter"] = { fg = colors.delimiter },
             ["@punctuation.bracket"] = { fg = colors.fg_alt },
             ["@punctuation.delimiter"] = { fg = colors.fg_alt },
             ["@text"] = { fg = colors.fg },
-            ["@text.emphasis"] = { italic = true },
+            ["@text.emphasis"] = { fg = colors.fg },
             ["@text.strong"] = { bold = true },
             ["@text.title"] = { fg = colors.func, bold = true },
             ["@text.literal"] = { fg = colors.string },

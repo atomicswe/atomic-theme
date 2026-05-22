@@ -1,83 +1,134 @@
--- Nova Theme Color Palette
+-- Atomic Theme Color Palette
 --
--- Colors are defined here to make them easy to reference and modify
+-- A restrained palette with matching dark and light variants.
 
 local M = {}
 
-M.colors = {
-  -- Base colors
-  bg        = "#1a1b26", -- Rich dark background with slight blue undertone
-  bg_alt    = "#24283b", -- Slightly lighter background for contrast
-  bg_float  = "#1e2030", -- Background for floating windows
-  fg        = "#c0caf5", -- Soft blue-white foreground for primary text
-  fg_alt    = "#a9b1d6", -- Slightly dimmer foreground for secondary elements
+M.dark = {
+    bg = "#1d1c21",
+    bg_alt = "#28272b",
+    bg_float = "#2f2f38",
+    fg = "#d8dee4",
+    fg_alt = "#a9b3bd",
 
-  -- UI elements
-  border    = "#3b4261", -- Border color for windows
-  selection = "#364a82", -- Selection highlight
-  comment   = "#565f89", -- Muted blue-gray for comments
-  line_nr   = "#3b4261", -- Line numbers
-  cursor    = "#38D4A4", -- Cursor color (using teal from palette)
+    border = "#53525c",
+    selection = "#2b4155",
+    comment = "#69737d",
+    line_nr = "#4a545e",
+    cursor = "#f0f0f0",
 
-  -- Syntax highlighting
-  keyword   = "#9F32F9", -- Brightened purple for keywords
-  operator  = "#47D7FF", -- Brightened light blue for operators
-  func      = "#3993FF", -- Brightened blue for functions
-  string    = "#A0D620", -- Brightened olive green for strings
-  constant  = "#FF9D20", -- Brightened orange for constants
-  number    = "#FF9D20", -- Using same brightened orange for numbers
-  type      = "#7159FF", -- Brightened indigo for types
-  variable  = "#D5E8FF", -- Brightened default foreground for variables
-  parameter = "#FF5DA8", -- Brightened pink for parameters
-  property  = "#FF40C3", -- Brightened magenta for object properties
+    keyword = "#8ab4f8",
+    operator = "#9aa4ae",
+    func = "#7cc7b0",
+    string = "#e6ae37",
+    constant = "#d8a657",
+    number = "#d8a657",
+    type = "#b6a0ff",
+    variable = "#d8dee4",
+    parameter = "#c5ccd3",
+    property = "#c5ccd3",
+    delimiter = "#7f8993",
 
-  -- Status and special
-  error     = "#FF3939", -- Brightened red for errors
-  warning   = "#FFAE30", -- Brightened orange for warnings
-  hint      = "#4DFFBF", -- Brightened teal for hints
-  info      = "#59DFFF", -- Brightened light blue for info
-  added     = "#42FF00", -- Brightened green for git added
-  modified  = "#3993FF", -- Brightened blue for git modified
-  removed   = "#FF3939", -- Brightened red for git removed
+    error = "#e67e80",
+    warning = "#dbb671",
+    hint = "#7cc7b0",
+    info = "#8ab4f8",
+    added = "#9ccfd8",
+    modified = "#f6c177",
+    removed = "#eb6f92",
 
-  -- Diff colors
-  diff_add    = "#2a3834",
-  diff_change = "#26324a",
-  diff_delete = "#3a2a35",
-  diff_text   = "#26324a",
+    diff_add = "#1d3438",
+    diff_change = "#3a2f1f",
+    diff_delete = "#3a202c",
+    diff_text = "#493a24",
 }
+
+M.light = {
+    bg = "#fffaf5",
+    bg_alt = "#fffaf3",
+    bg_float = "#fcf6f0",
+    fg = "#202427",
+    fg_alt = "#56616b",
+
+    border = "#d0c9bb",
+    selection = "#d7e4ee",
+    comment = "#77808a",
+    line_nr = "#a89f91",
+    cursor = "#3d3d3d",
+
+    keyword = "#2f6fbd",
+    operator = "#68737d",
+    func = "#2f8f75",
+    string = "#e6ae37",
+    constant = "#9a6417",
+    number = "#9a6417",
+    type = "#7357b8",
+    variable = "#202427",
+    parameter = "#3a444c",
+    property = "#3a444c",
+    delimiter = "#68737d",
+
+    error = "#b34545",
+    warning = "#9a6417",
+    hint = "#2f8f75",
+    info = "#2f6fbd",
+    added = "#5b7f32",
+    modified = "#2f6fbd",
+    removed = "#b34545",
+
+    diff_add = "#dfead3",
+    diff_change = "#d8e7f2",
+    diff_delete = "#efd8d8",
+    diff_text = "#c9deed",
+}
+
+M.colors = M.dark
+
+function M.get(style)
+    if style == "light" then
+        return M.light, "light"
+    end
+
+    if style == "auto" and vim.o.background == "light" then
+        return M.light, "light"
+    end
+
+    return M.dark, "dark"
+end
 
 -- Create lighter/darker variations of existing colors
 function M.generate_variants()
-  local variants = {}
+    local variants = {}
 
-  -- Add lighter/darker variants of main colors
-  -- This can be useful for hover states, etc.
-  variants.bg_lighter = M.lighten(M.colors.bg, 0.1)
-  variants.bg_darker = M.darken(M.colors.bg, 0.1)
+    -- Add lighter/darker variants of main colors
+    -- This can be useful for hover states, etc.
+    variants.bg_lighter = M.lighten(M.colors.bg, 0.1)
+    variants.bg_darker = M.darken(M.colors.bg, 0.1)
 
-  return variants
+    return variants
 end
 
 -- Utility functions for color manipulation
 function M.lighten(hex, amount)
-  return M.blend(hex, "#ffffff", amount)
+    return M.blend(hex, "#ffffff", amount)
 end
 
 function M.darken(hex, amount)
-  return M.blend(hex, "#000000", amount)
+    return M.blend(hex, "#000000", amount)
 end
 
 function M.blend(foreground, background, alpha)
-  local bg = {tonumber(background:sub(2, 3), 16), tonumber(background:sub(4, 5), 16), tonumber(background:sub(6, 7), 16)}
-  local fg = {tonumber(foreground:sub(2, 3), 16), tonumber(foreground:sub(4, 5), 16), tonumber(foreground:sub(6, 7), 16)}
+    local bg = { tonumber(background:sub(2, 3), 16), tonumber(background:sub(4, 5), 16), tonumber(background:sub(6, 7),
+        16) }
+    local fg = { tonumber(foreground:sub(2, 3), 16), tonumber(foreground:sub(4, 5), 16), tonumber(foreground:sub(6, 7),
+        16) }
 
-  local blendChannel = function(i)
-    local ret = (alpha * fg[i] + ((1 - alpha) * bg[i]))
-    return string.format("%02x", math.floor(math.min(math.max(0, ret), 255) + 0.5))
-  end
+    local blendChannel = function(i)
+        local ret = (alpha * fg[i] + ((1 - alpha) * bg[i]))
+        return string.format("%02x", math.floor(math.min(math.max(0, ret), 255) + 0.5))
+    end
 
-  return string.format("#%s%s%s", blendChannel(1), blendChannel(2), blendChannel(3))
+    return string.format("#%s%s%s", blendChannel(1), blendChannel(2), blendChannel(3))
 end
 
 return M

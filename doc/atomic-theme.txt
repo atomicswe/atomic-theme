@@ -1,4 +1,4 @@
-*atomic-theme.txt*    A sophisticated, eye-friendly Neovim theme
+*atomic-theme.txt*    A restrained Neovim theme with dark and light modes
 
 ================================================================================
 CONTENTS                                                           *atomic-theme-contents*
@@ -14,15 +14,14 @@ CONTENTS                                                           *atomic-theme
 ================================================================================
 1. INTRODUCTION                                               *atomic-theme-introduction*
 
-Atomic theme is a sophisticated, eye-friendly dark theme for Neovim with carefully 
-balanced colors. It provides excellent syntax highlighting while avoiding eye 
-strain during long coding sessions.
+Atomic theme is a restrained Neovim theme with matching dark and light modes. It
+uses a small semantic color set so code reads cleanly without excess color noise.
 
 Features:
-- Modern color palette with proper contrast
+- Calm dark and light palettes
 - Extensive highlight groups for UI elements
 - Rich plugin support
-- Semantic color coding for better code readability
+- Small semantic color set for better code readability
 - Customization options
 
 ================================================================================
@@ -88,9 +87,10 @@ passing a table to the setup function:
 
 >
     require('atomic-theme').setup({
+        style = "auto",            -- "auto", "dark", or "light"
         transparent = false,       -- Use transparent background
-        italic_comments = true,    -- Make comments italic
-        bold_keywords = true,      -- Make keywords bold
+        italic_comments = false,   -- Make comments italic
+        bold_keywords = false,     -- Make keywords bold
         bold_functions = false,    -- Make function names bold
         dim_inactive_windows = false, -- Dim inactive windows
         disable_plugins = {},      -- Disable specific plugin highlights
@@ -98,15 +98,29 @@ passing a table to the setup function:
     })
 <
 
+`style = "auto"` follows 'background'. Use `style = "dark"` or `style = "light"`
+to force a mode.
+
 Example with custom highlights:
 >
     require('atomic-theme').setup({
         bold_keywords = false,
         custom_highlights = {
-            Comment = { fg = "#676e95", italic = true },
-            Keyword = { fg = "#c792ea" },
+            Comment = { fg = "#77808a" },
+            Keyword = { fg = "#2f6fbd" },
         }
     })
+<
+
+Local testing from this repository:
+>
+    nvim --clean --cmd 'set rtp+=.'
+<
+Then in Neovim:
+>
+    :colorscheme atomic-theme
+    :lua require("atomic-theme").setup({ style = "light" })
+    :lua require("atomic-theme").setup({ style = "dark" })
 <
 
 ================================================================================
@@ -138,9 +152,8 @@ You can disable specific plugin highlighting:
 Q: How can I make Atomic my default theme?
 A: Add `vim.cmd('colorscheme atomic-theme')` to your init.lua after the setup.
 
-Q: Can I create a lighter variant of Atomic?
-A: Currently, Atomic only supports a dark background. A light theme version may 
-   be added in the future.
+Q: Can I use a lighter variant of Atomic?
+A: Yes. Use `style = "light"` or set 'background' to "light" with `style = "auto"`.
 
 Q: Terminal colors look different from Neovim?
 A: Atomic sets terminal colors, but your terminal emulator needs to support this.

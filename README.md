@@ -4,14 +4,14 @@
   <img src="screenshots/atomic-theme-banner.png" alt="Atomic Theme" width="600">
 </p>
 
-A sophisticated, eye-friendly dark theme for Neovim with carefully balanced colors that provide excellent syntax highlighting while avoiding eye strain during long coding sessions.
+Atomic is a restrained Neovim theme with matching dark and light modes. It keeps the syntax palette small so code reads cleanly instead of looking like a fruit salad.
 
 ## ✨ Features
 
-- 🎨 Modern color palette with proper contrast ratios
+- 🎨 Calm dark and light palettes
 - 🔍 Extensive highlight groups for UI elements (80+ highlight groups)
 - 🔌 Rich plugin support (Treesitter, Telescope, LSP, Git, and more)
-- 🧠 Semantic color coding for better code readability
+- 🧠 Small semantic color set for better code readability
 - 🎛️ Customizable options to match your preferences
 
 ## 📸 Screenshots
@@ -80,9 +80,10 @@ Atomic theme comes with several configuration options:
 
 ```lua
 require('atomic-theme').setup({
+    style = "auto",            -- "auto", "dark", or "light"
     transparent = false,       -- Use transparent background
-    italic_comments = true,    -- Make comments italic
-    bold_keywords = true,      -- Make keywords bold
+    italic_comments = false,   -- Make comments italic
+    bold_keywords = false,     -- Make keywords bold
     bold_functions = false,    -- Make function names bold
     dim_inactive_windows = false, -- Dim inactive windows
     disable_plugins = {},      -- Disable specific plugin highlights
@@ -90,16 +91,40 @@ require('atomic-theme').setup({
 })
 ```
 
+`style = "auto"` follows `vim.o.background`. Use `style = "dark"` or `style = "light"` to force a mode.
+
 Example with custom highlights:
 
 ```lua
 require('atomic-theme').setup({
     bold_keywords = false,
     custom_highlights = {
-        Comment = { fg = "#676e95", italic = true },
-        Keyword = { fg = "#c792ea" },
+        Comment = { fg = "#77808a" },
+        Keyword = { fg = "#2f6fbd" },
     }
 })
+```
+
+## 🧪 Local Testing
+
+From this repository:
+
+```sh
+nvim --clean --cmd 'set rtp+=.'
+```
+
+Then in Neovim:
+
+```vim
+:colorscheme atomic-theme
+:lua require("atomic-theme").setup({ style = "light" })
+:lua require("atomic-theme").setup({ style = "dark" })
+```
+
+Headless smoke test:
+
+```sh
+nvim --headless -u NONE --cmd 'set rtp+=.' -c 'colorscheme atomic-theme' -c 'lua require("atomic-theme").setup({ style = "light" })' -c 'lua require("atomic-theme").setup({ style = "dark" })' -c 'qa'
 ```
 
 ## 🔌 Supported Plugins

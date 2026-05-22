@@ -1,9 +1,10 @@
 local M = {}
 
 local defaults = {
+  style = "auto",
   transparent = false,
-  italic_comments = true,
-  bold_keywords = true,
+  italic_comments = false,
+  bold_keywords = false,
   bold_functions = false,
   dim_inactive_windows = false,
   custom_highlights = {},
